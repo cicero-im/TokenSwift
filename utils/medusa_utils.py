@@ -1,8 +1,8 @@
 import torch
-import random
 
 from typing import List, Dict
 from utils.sampling import sample
+import secrets
 
 TOPK = 10
 
@@ -296,7 +296,7 @@ def exactly_match_sampling(candidates: torch.Tensor, full_verify_probs: torch.Te
         max_acc_ngram_len = 0
 
     max_accept_length_list = torch.nonzero(candidates_accept_length == accept_len).squeeze(1)
-    accept_index = max_accept_length_list[random.sample((0, max_accept_length_list.shape[0] - 1), k=1)].item()
+    accept_index = max_accept_length_list[secrets.SystemRandom().sample((0, max_accept_length_list.shape[0] - 1), k=1)].item()
 
     accept_seq = candidates[accept_index, : accept_len + 1]  # plus 1 for root token
 
